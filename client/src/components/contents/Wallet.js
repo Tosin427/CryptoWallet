@@ -91,7 +91,7 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
                   <Col span={24} className="card-contain">
                     <i class="fab fa-bitcoin"></i>
                     <p>$0.00</p>
-                    <p>0.00BTH</p>
+                    <p>bitCoinAddress Balance</p>
                   </Col>
                 </div>
                 <div>
