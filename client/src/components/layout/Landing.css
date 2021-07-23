@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main {
+  background: #031629;
+  height: 100vh;
+}
+
+.main-build {
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
+  display: flex;
+  align-items: center;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.main-build img {
+  width: 30%;
+  float: right;
+  margin-right: 30px;
+  /* margin-left: 300px; */
+}
+
+@media only screen and (max-width: 800px) {
+  .main-build img {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+}
