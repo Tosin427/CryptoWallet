@@ -70,6 +70,19 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     setQRCodeText(inputText);
   };
 
+  const bitadd = user && user.bitcoinAddress.address;
+  const [balance, setBalance] = useState('');
+
+  useEffect(() => {
+    axios
+      .get(`https://blockchain.info/q/addressbalance/${bitadd}?confirmations=3`)
+      .then((response) =>
+        setBalance(
+          Math.round((response.data * 100000000) / 100000000).toFixed(8)
+        )
+      );
+  }, []);
+
   return (
     <div>
       <div
@@ -91,7 +104,7 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
                   <Col span={24} className="card-contain">
                     <i class="fab fa-bitcoin"></i>
                     <p>$0.00</p>
-                    <p>bitCoinAddress Balance</p>
+                    <p>BTC: {balance}</p>
                   </Col>
                 </div>
                 <div>

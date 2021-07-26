@@ -21,13 +21,13 @@ const UserSchema = new mongoose.Schema({
     key: { type: String, required: true },
     address: { type: String, required: true }
   },
-  bitcoinBalance: {
-    status: { type: String, required: true },
-    service: { type: String, required: true },
-    address: { type: String, required: true },
-    asset: { type: String, required: true },
-    quantity: { type: String, required: true }
-  },
+  // bitcoinBalance: {
+  //   status: { type: String, required: true },
+  //   service: { type: String, required: true },
+  //   address: { type: String, required: true },
+  //   asset: { type: String, required: true },
+  //   quantity: { type: String, required: true }
+  // },
   bitcoinQr: {
     type: String
   },
