@@ -76,11 +76,7 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
   useEffect(() => {
     axios
       .get(`https://blockchain.info/q/addressbalance/${bitadd}?confirmations=3`)
-      .then((response) =>
-        setBalance(
-          Math.round((response.data * 100000000) / 100000000).toFixed(8)
-        )
-      );
+      .then((response) => setBalance(response.data / 100000000));
   }, []);
 
   return (
