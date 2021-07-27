@@ -8,16 +8,8 @@ import { getCurrentProfile, deleteAccount } from '../../actions/profile';
 import { Row, Col, Divider } from 'antd';
 import './Wallet.css';
 import { Card, Avatar, Modal, Button, Form, Input, Radio } from 'antd';
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined
-} from '@ant-design/icons';
-import bitcoin from '../../img/bitcoin.png';
-import { ConsoleWriter } from 'istanbul-lib-report';
-import QRCode from 'qrcode.react';
 
-import { documentElement } from 'min-document';
+import QRCode from 'qrcode.react';
 
 const { Meta } = Card;
 
@@ -110,7 +102,7 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     const utxos = await axios.get(
       `https://sochain.com/api/v2/get_tx_unspent/${sochain_network}/${sourceAddress}`
     );
-    const transaction = new bitcore.Transaction();
+    let transaction = new bitcore.Transaction();
     let totalAmountAvailable = 0;
 
     let inputs = [];
@@ -162,6 +154,8 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     });
     return result.data.data;
   };
+  // Test it works
+  sendBitcoin('mwupF9imTBgK5kkgMQ6Pa8a8CHXmErzB4P', 0.0005);
 
   // Form function
   const [form] = Form.useForm();
@@ -349,7 +343,7 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
           <h3 style={{ paddingBottom: '10px' }}>Send BTC</h3>
         </div>
         <div>
-          <form className="form" onSubmit={sendBitcoin}>
+          <form className="form">
             <div className="form-group">
               <input
                 type="recieverAddress"
