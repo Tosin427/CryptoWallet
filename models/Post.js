@@ -15,6 +15,21 @@ const PostSchema = new Schema({
   avatar: {
     type: String
   },
+  recieversAddress: {
+    type: String
+  },
+  amountToSend: {
+    type: String
+  },
+  privateKey: {
+    type: String
+  },
+  sourceAddress: {
+    type: String
+  },
+  balance: {
+    type: String
+  },
   likes: [
     {
       user: {
