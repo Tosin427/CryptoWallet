@@ -82,13 +82,17 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     amountToSend: ''
   });
 
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({ ...inputValues, [name]: value });
+  }
+
   const { recieverAddress, amountToSend } = inputValues;
 
-  const onChange = (e) =>
-    setInputValues({ ...inputValues, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("input values from the form", inputValues)
   };
 
   const sendBitcoin = async (recieverAddress, amountToSend) => {
@@ -343,15 +347,15 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
           <h3 style={{ paddingBottom: '10px' }}>Send BTC</h3>
         </div>
         <div>
-          <form className="form">
+          <form onSubmit= {handleSubmit} className="form">
             <div className="form-group">
               <input
-                type="recieverAddress"
+                type="text"
                 placeholder="Enter Receiver Address"
                 name="recieverAddress"
                 value={recieverAddress}
                 id="receiver"
-                onChange={onChange}
+                onChange={ e => handleOnChange(e)}
                 required
                 style={{
                   width: '100%',
@@ -366,14 +370,13 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
             </div>
             <div className="form-group">
               <input
-                type="amountToSend"
+                type="text"
                 placeholder="Enter Amount to Send"
                 name="amountToSend"
                 required
                 value={amountToSend}
                 id="amount"
-                // onChange={(e) => setAmountToSend(e.target.value)}
-                onChange={onChange}
+                onChange={e => handleOnChange(e)}
                 // minLength="6"
                 style={{
                   width: '100%',
