@@ -155,7 +155,6 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     return result.data.data;
   };
   // Test it works
-  sendBitcoin('mwupF9imTBgK5kkgMQ6Pa8a8CHXmErzB4P', 0.0005);
 
   // Form function
   const [form] = Form.useForm();
