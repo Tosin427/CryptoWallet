@@ -47,7 +47,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
     <nav className="navbar bg-dark">
       <h1>
         <Link to="/">
-          <i class="fas fa-wallet"></i> Early Baze Wallet
+          <i className="fas fa-wallet"></i> Early Baze Wallet
         </Link>
       </h1>
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>

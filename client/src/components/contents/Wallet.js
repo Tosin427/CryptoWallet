@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import bitcore from 'bitcore-lib';
+import axios from 'axios';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile, deleteAccount } from '../../actions/profile';
@@ -10,6 +11,12 @@ import './Wallet.css';
 import { Card, Avatar, Modal, Button, Form, Input, Radio } from 'antd';
 
 import QRCode from 'qrcode.react';
+// import bitcoin from 'bitcoinjs-libs';
+
+// import $ from 'jquery';
+// const axios = require('axios');
+// const bitcore = require('bitcore-lib');
+// const multicore = require('multicore-lib');
 
 const { Meta } = Card;
 
@@ -65,16 +72,17 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     setQRCodeText(inputText);
   };
 
-  const bitadd = user && user.bitcoinAddress.address;
+  const bitadd = user.bitcoinAddress.address;
+  // console.log(user.bitcoinAddress.key);
   const [balance, setBalance] = useState('');
 
   useEffect(() => {
     axios
-      .get(
-        `https://sochain.com/api/v2/get_tx_unspent/BTCTEST/mtTQNVSaKxqAmnvu86qpcnu276QX2mM6Uv`
-      )
-      .then((response) => setBalance(response.data.data.txs[0].value));
+      .get(`https://api.blockcypher.com/v1/btc/main/addrs/${bitadd}/balance`)
+      .then((response) => setBalance(response.data.balance / 100000000));
   }, []);
+
+  // console.log(balance);
 
   // Send Bitcoin Function
   const [inputValues, setInputValues] = useState({
@@ -82,19 +90,31 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     amountToSend: ''
   });
 
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({ ...inputValues, [name]: value });
+  };
+
   const { recieverAddress, amountToSend } = inputValues;
 
-  const onChange = (e) =>
-    setInputValues({ ...inputValues, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('input values from the form', inputValues);
+    sendBitcoin(recieverAddress, amountToSend);
+    // sendBitcoin('mwupF9imTBgK5kkgMQ6Pa8a8CHXmErzB4P', 0.0005);
   };
+
+  // mh4AE4pMsc2M28rN7biuVJpXoLdUSK8A7t
+  // 924AKcXdQWS6j9XLkd3Njq1c892Cwp2CMe6e5jdwNi9cXKPEWVc
+
+  // send to account
+  // miT7R84ThNnF49QA3KbQoRAtULdTUC2JH4
+  // 92BH8HM5kHpGiWRHwJGwUg3aURzcZ8vPuKfHSQirjWRy8j4qmPW
 
   const sendBitcoin = async (recieverAddress, amountToSend) => {
     const sochain_network = 'BTCTEST';
-    const privateKey = '93SaZACQTsjNk3TwwbqXE7C6yRjbJi3TBkYhAis22op3wWRXuUK';
-    const sourceAddress = 'mtTQNVSaKxqAmnvu86qpcnu276QX2mM6Uv';
+    const privateKey = '924AKcXdQWS6j9XLkd3Njq1c892Cwp2CMe6e5jdwNi9cXKPEWVc';
+    const sourceAddress = 'mh4AE4pMsc2M28rN7biuVJpXoLdUSK8A7t';
     const satoshiToSend = amountToSend * 100000000;
     let fee = 0;
     let inputCount = 0;
@@ -102,7 +122,10 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     const utxos = await axios.get(
       `https://sochain.com/api/v2/get_tx_unspent/${sochain_network}/${sourceAddress}`
     );
-    let transaction = new bitcore.Transaction();
+
+    console.log(utxos.data.data);
+
+    const transaction = new bitcore.Transaction();
     let totalAmountAvailable = 0;
 
     let inputs = [];
@@ -122,9 +145,9 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
       inputCount * 146 + outputCount * 34 + 10 - inputCount;
     // Check if we have enough funds to cover the transaction and the fees assuming we want to pay 20 satoshis per byte
 
-    fee = transactionSize * 20;
+    fee = transactionSize;
     if (totalAmountAvailable - satoshiToSend - fee < 0) {
-      throw new Error('Balance is too low for this transaction');
+      alert('Balance is too low for this transaction');
     }
 
     //Set transaction input
@@ -138,9 +161,9 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
 
     //manually set transaction fees: 20 satoshis per byte
     transaction.fee(fee * 20);
-
     // Sign transaction with your private key
     transaction.sign(privateKey);
+    // console.log(privateKey);
 
     // serialize Transactions
     const serializedTransaction = transaction.serialize();
@@ -342,15 +365,15 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
           <h3 style={{ paddingBottom: '10px' }}>Send BTC</h3>
         </div>
         <div>
-          <form className="form">
+          <form onSubmit={handleSubmit} className="form">
             <div className="form-group">
               <input
-                type="recieverAddress"
+                type="text"
                 placeholder="Enter Receiver Address"
                 name="recieverAddress"
                 value={recieverAddress}
                 id="receiver"
-                onChange={onChange}
+                onChange={(e) => handleOnChange(e)}
                 required
                 style={{
                   width: '100%',
@@ -365,14 +388,13 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
             </div>
             <div className="form-group">
               <input
-                type="amountToSend"
+                type="text"
                 placeholder="Enter Amount to Send"
                 name="amountToSend"
                 required
                 value={amountToSend}
                 id="amount"
-                // onChange={(e) => setAmountToSend(e.target.value)}
-                onChange={onChange}
+                onChange={(e) => handleOnChange(e)}
                 // minLength="6"
                 style={{
                   width: '100%',

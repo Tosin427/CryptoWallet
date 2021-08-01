@@ -31,6 +31,7 @@ import Avatar from 'react-avatar';
 
 // Contents import
 import Wallet from '../contents/Wallet';
+import NewDashboard from './NewDashboard';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -107,6 +108,7 @@ const Dashboard = ({
 
             <Switch>
               <Route path="/wallet" component={Wallet} />
+              <Route pathe="/newdashboard" component={NewDashboard} />
             </Switch>
             {/* <div
             className="site-layout-background"
