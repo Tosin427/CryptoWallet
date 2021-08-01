@@ -66,6 +66,8 @@ const sendBitcoin = async (recieverAddress, amountToSend) => {
   });
   return result.data.data;
 };
-sendBitcoin('miT7R84ThNnF49QA3KbQoRAtULdTUC2JH4', 0.005);
+// sendBitcoin('miT7R84ThNnF49QA3KbQoRAtULdTUC2JH4', 0.005);
 
 // export default sendBitcoin;
+
+module.exports = sendBitcoin;
