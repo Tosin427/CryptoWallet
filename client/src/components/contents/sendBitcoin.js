@@ -1,13 +1,15 @@
-// import axios from 'axios';
-// import bitcore from 'bitcore-lib';
-
 const axios = require('axios');
 const bitcore = require('bitcore-lib');
 
-const sendBitcoin = async (recieverAddress, amountToSend) => {
+const sendBitcoin = async (
+  privateKey,
+  sourceAddress,
+  recieverAddress,
+  amountToSend
+) => {
   const sochain_network = 'BTCTEST';
-  const privateKey = '924AKcXdQWS6j9XLkd3Njq1c892Cwp2CMe6e5jdwNi9cXKPEWVc';
-  const sourceAddress = 'mh4AE4pMsc2M28rN7biuVJpXoLdUSK8A7t';
+  // const privateKey = '';
+  // const sourceAddress = '';
   const satoshiToSend = amountToSend * 100000000;
   let fee = 0;
   let inputCount = 0;
@@ -34,7 +36,7 @@ const sendBitcoin = async (recieverAddress, amountToSend) => {
   const transactionSize = inputCount * 146 + outputCount * 34 + 10 - inputCount;
   // Check if we have enough funds to cover the transaction and the fees assuming we want to pay 20 satoshis per byte
 
-  fee = transactionSize * 20;
+  fee = transactionSize;
   if (totalAmountAvailable - satoshiToSend - fee < 0) {
     throw new Error('Balance is too low for this transaction');
   }

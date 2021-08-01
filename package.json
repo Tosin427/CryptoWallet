@@ -13,6 +13,7 @@
   "author": "Brad Traversy",
   "license": "MIT",
   "dependencies": {
+    "await": "^0.2.6",
     "axios": "^0.21.0",
     "balance-crypto": "^0.2.14",
     "base58": "^2.0.1",
