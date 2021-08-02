@@ -78,7 +78,8 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     setQRCodeText(inputText);
   };
 
-  const bitadd = user.bitcoinAddress.address;
+  const bitadd = user.bitAdd;
+
   // console.log(user.bitcoinAddress.key);
   const [balance, setBalance] = useState('');
 
