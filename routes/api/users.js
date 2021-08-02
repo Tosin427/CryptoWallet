@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 const normalize = require('normalize-url');
+const CoinKey = require('coinkey');
 
 const User = require('../../models/User');
 
@@ -49,6 +50,10 @@ router.post(
         { forceHttps: true }
       );
 
+      var wallet = new CoinKey.createRandom();
+      let bitAdd = wallet.publicAddress;
+      let bitKey = wallet.privateKey.toString('hex');
+
       let bitcoinAddress = {};
       Bitcoin.createWalletAddress((data) => {
         bitcoinAddress = data;
@@ -59,7 +64,7 @@ router.post(
         console.log(result);
       });
 
-      console.log('this is a test');
+      // console.log('this is a test');
       let bitcoinQr = {};
       QRCode.toString(
         bitcoinAddress,
@@ -75,6 +80,8 @@ router.post(
         name,
         email,
         avatar,
+        bitAdd,
+        bitKey,
         bitcoinAddress,
         bitcoinBalance,
         bitcoinQr,

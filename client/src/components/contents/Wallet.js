@@ -13,6 +13,7 @@ import { Card, Avatar, Modal, Button, Form, Input, Radio } from 'antd';
 import QRCode from 'qrcode.react';
 
 import sendBitcoin from './sendBitcoin';
+import Reports from './Reports';
 // const sendBitcoin = require('../contents/sendBitcoin');
 // import bitcoin from 'bitcoinjs-libs';
 // sendBitcoin('miT7R84ThNnF49QA3KbQoRAtULdTUC2JH4', '0.005');
@@ -106,12 +107,9 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
     e.preventDefault();
     console.log('input values from the form', inputValues);
     // send
-    sendBitcoin(
-      '924AKcXdQWS6j9XLkd3Njq1c892Cwp2CMe6e5jdwNi9cXKPEWVc',
-      'mh4AE4pMsc2M28rN7biuVJpXoLdUSK8A7t',
-      'mwupF9imTBgK5kkgMQ6Pa8a8CHXmErzB4P',
-      0.005
-    );
+
+    // 03453e14d839641ffa973ca48686751cd408d9627e4c5a7d561569af4a66819c1d
+    sendBitcoin(user.bitKey, user.bitAdd, recieverAddress, amountToSend);
     // sendBitcoin('mwupF9imTBgK5kkgMQ6Pa8a8CHXmErzB4P', 0.0005);
   };
 
@@ -180,7 +178,7 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
                     <Col className="gutter-row" span={8}>
                       <div className="receive">
                         <i style={{ display: 'inline' }} class="fab fa-gg"></i>
-                        <p onClick={showModal}>ReceiveETH</p>
+                        <p onClick={showModal}>ReceiveBTC</p>
                       </div>
                     </Col>
                     <Col className="gutter-row" span={8}>
@@ -206,18 +204,133 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
               </div>
             </Col>
           </Row>
-          <Col className="gutter-row" span={6}>
-            <div style={style}>col-6</div>
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <div style={style}>col-6</div>
-          </Col>
-          <Col className="gutter-row" span={6}>
-            <div style={style}>col-6</div>
-          </Col>
+          <Row>
+            <Col className="gutter-row" span={20}>
+              <div className="wallets">
+                <div>
+                  <Col span={24} className="card-contain">
+                    <i class="fab fa-ethereum"></i>
+                    <p>$0.00</p>
+                    <p>ETH: 0.00</p>
+                  </Col>
+                </div>
+                <div>
+                  <div className="function">
+                    <Col className="gutter-row" span={8}>
+                      <div className="receive">
+                        <i style={{ display: 'inline' }} class="fab fa-gg"></i>
+                        <p>ReceiveETH</p>
+                      </div>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                      <div>
+                        <i
+                          style={{ display: 'inline' }}
+                          class="fas fa-angle-double-right"
+                        ></i>
+                        <p>Sell</p>
+                      </div>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                      <div>
+                        <i
+                          style={{ display: 'inline' }}
+                          class="fas fa-share-square"
+                        ></i>
+                        <p>Send</p>
+                      </div>
+                    </Col>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="gutter-row" span={20}>
+              <div className="wallets">
+                <div>
+                  <Col span={24} className="card-contain">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <p>$0.00</p>
+                    <p>USDT: 0.00</p>
+                  </Col>
+                </div>
+                <div>
+                  <div className="function">
+                    <Col className="gutter-row" span={8}>
+                      <div className="receive">
+                        <i style={{ display: 'inline' }} class="fab fa-gg"></i>
+                        <p>ReceiveUSDT</p>
+                      </div>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                      <div>
+                        <i
+                          style={{ display: 'inline' }}
+                          class="fas fa-angle-double-right"
+                        ></i>
+                        <p>Sell</p>
+                      </div>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                      <div>
+                        <i
+                          style={{ display: 'inline' }}
+                          class="fas fa-share-square"
+                        ></i>
+                        <p>Send</p>
+                      </div>
+                    </Col>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="gutter-row" span={20}>
+              <div className="wallets">
+                <div>
+                  <Col span={24} className="card-contain">
+                    <i class="fab fa-bitcoin"> cash</i>
+
+                    <p>$0.00</p>
+                    <p>BCH: 0.00</p>
+                  </Col>
+                </div>
+                <div>
+                  <div className="function">
+                    <Col className="gutter-row" span={8}>
+                      <div className="receive">
+                        <i style={{ display: 'inline' }} class="fab fa-gg"></i>
+                        <p>ReceiveBCH</p>
+                      </div>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                      <div>
+                        <i
+                          style={{ display: 'inline' }}
+                          class="fas fa-angle-double-right"
+                        ></i>
+                        <p>Sell</p>
+                      </div>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                      <div>
+                        <i
+                          style={{ display: 'inline' }}
+                          class="fas fa-share-square"
+                        ></i>
+                        <p>Send</p>
+                      </div>
+                    </Col>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Row>
       </div>
-
+      <Reports />
       {/* Modal for Recieve BTC */}
 
       <Modal
@@ -258,7 +371,7 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
               paddingRight: '50px'
             }}
             type="email"
-            value={user && user.bitcoinAddress.address}
+            value={user && user.bitAdd}
             name="email"
           />
           <input
@@ -278,11 +391,7 @@ const Wallet = ({ getCurrentProfile, auth: { user } }) => {
           />
 
           <div style={{ paddingTop: '20px' }}>
-            <QRCode
-              id="qrCodeEl"
-              size={150}
-              value={user && user.bitcoinAddress.address}
-            />
+            <QRCode id="qrCodeEl" size={150} value={user && user.bitAdd} />
           </div>
         </div>
       </Modal>

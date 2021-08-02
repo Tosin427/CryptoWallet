@@ -7,7 +7,7 @@ const sendBitcoin = async (
   recieverAddress,
   amountToSend
 ) => {
-  const sochain_network = 'BTCTEST';
+  const sochain_network = 'BTC';
   // const privateKey = '';
   // const sourceAddress = '';
   const satoshiToSend = amountToSend * 100000000;
@@ -61,7 +61,7 @@ const sendBitcoin = async (
   // Send transaction
   const result = await axios({
     method: 'POST',
-    url: `https://sochain.com/api/v2/send_tx/${sochain_network}`,
+    url: `'https://blockchain.info/pushtx?cors=true'`,
     data: {
       tx_hex: serializedTransaction
     }

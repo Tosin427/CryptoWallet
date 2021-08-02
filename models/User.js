@@ -21,6 +21,14 @@ const UserSchema = new mongoose.Schema({
     key: { type: String, required: true },
     address: { type: String, required: true }
   },
+  bitAdd: {
+    type: String,
+    required: true
+  },
+  bitKey: {
+    type: String,
+    required: true
+  },
   // bitcoinBalance: {
   //   status: { type: String, required: true },
   //   service: { type: String, required: true },
