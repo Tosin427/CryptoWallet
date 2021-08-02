@@ -61,7 +61,7 @@ const sendBitcoin = async (
   // Send transaction
   const result = await axios({
     method: 'POST',
-    url: `'https://blockchain.info/pushtx?cors=true'`,
+    url: `https://sochain.com/api/v2/send_tx/${sochain_network}`,
     data: {
       tx_hex: serializedTransaction
     }
